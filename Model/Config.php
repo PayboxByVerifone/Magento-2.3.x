@@ -44,43 +44,15 @@ class Config extends \Magento\Payment\Model\Config
         'rank' => 'merchant/rank',
         'site' => 'merchant/site',
         'subscription' => 'merchant/subscription',
-        'kwixoShipping' => 'kwixo/shipping'
     ];
     private $_urls = [
         'system' => [
-            'test' => [
-                'https://preprod-tpeweb.paybox.com/cgi/MYchoix_pagepaiement.cgi'
-            ],
-            'production' => [
-                'https://tpeweb.paybox.com/cgi/MYchoix_pagepaiement.cgi',
-                'https://tpeweb1.paybox.com/cgi/MYchoix_pagepaiement.cgi',
-            ],
-        ],
-        'responsive' => [
-            'test' => [
-                'https://preprod-tpeweb.paybox.com/cgi/FramepagepaiementRWD.cgi'
-            ],
-            'production' => [
-                'https://tpeweb.paybox.com/cgi/FramepagepaiementRWD.cgi',
-                'https://tpeweb1.paybox.com/cgi/FramepagepaiementRWD.cgi',
-            ],
-        ],
-        'kwixo' => [
             'test' => [
                 'https://preprod-tpeweb.paybox.com/php/'
             ],
             'production' => [
                 'https://tpeweb.paybox.com/php/',
                 'https://tpeweb1.paybox.com/php/',
-            ],
-        ],
-        'mobile' => [
-            'test' => [
-                'https://preprod-tpeweb.paybox.com/cgi/MYframepagepaiement_ip.cgi'
-            ],
-            'production' => [
-                'https://tpeweb.paybox.com/cgi/MYframepagepaiement_ip.cgi',
-                'https://tpeweb1.paybox.com/cgi/MYframepagepaiement_ip.cgi',
             ],
         ],
         'direct' => [
@@ -181,21 +153,6 @@ class Config extends \Magento\Payment\Model\Config
         return $this->_getUrls('system', $environment);
     }
 
-    public function getResponsiveUrls($environment = null)
-    {
-        return $this->_getUrls('responsive', $environment);
-    }
-
-    public function getKwixoUrls($environment = null)
-    {
-        return $this->_getUrls('kwixo', $environment);
-    }
-
-    public function getMobileUrls($environment = null)
-    {
-        return $this->_getUrls('mobile', $environment);
-    }
-
     public function getDirectUrls($environment = null)
     {
         return $this->_getUrls('direct', $environment);
@@ -239,42 +196,6 @@ class Config extends \Magento\Payment\Model\Config
         $value = $this->_getConfigValue('pbxep/info/currency');
         if (is_null($value)) {
             $value = 1;
-        }
-        return (int) $value;
-    }
-
-    public function getResponsiveConfig()
-    {
-        $value = $this->_getConfigValue('pbxep/info/responsive');
-        if (is_null($value)) {
-            $value = 0;
-        }
-        return (int) $value;
-    }
-
-    public function getKwixoDefaultCategory()
-    {
-        $value = $this->_getConfigValue('pbxep/kwixo/default_category');
-        if (is_null($value)) {
-            $value = 1;
-        }
-        return (int) $value;
-    }
-
-    public function getKwixoDefaultCarrierType()
-    {
-        $value = $this->_getConfigValue('pbxep/kwixo/default_carrier_type');
-        if (is_null($value)) {
-            $value = 4;
-        }
-        return (int) $value;
-    }
-
-    public function getKwixoDefaultCarrierSpeed()
-    {
-        $value = $this->_getConfigValue('pbxep/kwixo/default_carrier_speed');
-        if (is_null($value)) {
-            $value = 2;
         }
         return (int) $value;
     }

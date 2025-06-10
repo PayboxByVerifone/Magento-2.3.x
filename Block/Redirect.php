@@ -56,31 +56,10 @@ class Redirect extends \Magento\Framework\View\Element\Template
         return 'hidden';
     }
 
-    public function getKwixoUrl()
-    {
-        $paybox = $this->_objectManager->get('Paybox\Epayment\Model\Paybox');
-        $urls = $paybox->getConfig()->getKwixoUrls();
-        return $paybox->checkUrls($urls);
-    }
-
-    public function getMobileUrl()
-    {
-        $paybox = $this->_objectManager->get('Paybox\Epayment\Model\Paybox');
-        $urls = $paybox->getConfig()->getMobileUrls();
-        return $paybox->checkUrls($urls);
-    }
-
     public function getSystemUrl()
     {
         $paybox = $this->_objectManager->get('Paybox\Epayment\Model\Paybox');
         $urls = $paybox->getConfig()->getSystemUrls();
-        return $paybox->checkUrls($urls);
-    }
-
-    public function getResponsiveUrl()
-    {
-        $paybox = $this->_objectManager->get('Paybox\Epayment\Model\Paybox');
-        $urls = $paybox->getConfig()->getResponsiveUrls();
         return $paybox->checkUrls($urls);
     }
 }

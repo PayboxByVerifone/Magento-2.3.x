@@ -1,4 +1,10 @@
 # Change Log
+## [2.0.9] 2025-06-10
+- Improve IPN error logging
+- Fix unwanted exceptions on some refused payment
+- Force default value of CountryCodeMobilePhone
+- Set compatibility with Magento 2.4.7 & 2.4.8 (PHP 8.3 & PHP 8.4)
+
 ## [2.0.8] 2024-07-11
 - Add phone number into PBX_BILLING
 - Fix single payment method issue
