@@ -51,8 +51,8 @@ class Config extends \Magento\Payment\Model\Config
                 'https://preprod-tpeweb.paybox.com/php/'
             ],
             'production' => [
-                'https://tpeweb.paybox.com/php/',
                 'https://tpeweb1.paybox.com/php/',
+                'https://tpeweb.paybox.com/php/',
             ],
         ],
         'direct' => [
