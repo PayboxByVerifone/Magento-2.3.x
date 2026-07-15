@@ -130,6 +130,38 @@
                     </E_CARD>
                 </cards>
             </pbxep_threetime>
+            <pbxep_wallet>
+                <active>0</active>
+                <model>Paybox\Epayment\Model\Payment\Wallet</model>
+                <title>Pay by Wallet</title>
+                <group>pbxep</group>
+                <is_gateway>1</is_gateway>
+                <can_order>1</can_order>
+                <can_use_checkout>1</can_use_checkout>
+                <can_capture>1</can_capture>
+                <can_use_for_multishipping>1</can_use_for_multishipping>
+                <allowspecific>0</allowspecific>
+                <cctypes>APPLEPAY,GOOGLEPAY</cctypes>
+                <status_paid>pbxep_paid</status_paid>
+                <status_authorized>pbxep_authorized</status_authorized>
+                <payment_action>immediate</payment_action>
+                <action>immediate</action>
+                <delay>1</delay>
+                <cards>
+                    <APPLEPAY>
+                        <label>Apple Pay</label>
+                        <image>images/pbxep/applepay.svg</image>
+                        <payment>WALLET</payment>
+                        <card>APPLEPAY</card>
+                    </APPLEPAY>
+                    <GOOGLEPAY>
+                        <label>Google Pay</label>
+                        <image>images/pbxep/googlepay.svg</image>
+                        <payment>WALLET</payment>
+                        <card>GOOGLEPAY</card>
+                    </GOOGLEPAY>
+                </cards>
+            </pbxep_wallet>
             <pbxep_private>
                 <pv_active>0</pv_active>
                 <model>Paybox\Epayment\Model\Payment\PrivateCard</model>

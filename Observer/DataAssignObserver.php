@@ -35,7 +35,11 @@ class DataAssignObserver extends AbstractDataAssignObserver
     public function execute(Observer $observer)
     {
         $method = $this->readMethodArgument($observer);
-        if ($method->getCode() !== 'pbxep_cb' || $method->getHasCctypes() === false) {
+        $methodConfigMap = [
+            'pbxep_cb' => 'Paybox\Epayment\Model\Ui\PbxepcbConfig',
+            'pbxep_wallet' => 'Paybox\Epayment\Model\Ui\PbxepwalletConfig',
+        ];
+        if (!isset($methodConfigMap[$method->getCode()]) || $method->getHasCctypes() === false) {
             return;
         }
         $data = $this->readDataArgument($observer);
@@ -57,7 +61,7 @@ class DataAssignObserver extends AbstractDataAssignObserver
         }
 
         $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-        $selected = explode(',', $objectManager->get('Paybox\Epayment\Model\Ui\PbxepcbConfig')->getCards());
+        $selected = explode(',', $objectManager->get($methodConfigMap[$method->getCode()])->getCards());
         if (!in_array($cctype, $selected)) {
             throw new \Magento\Framework\Exception\LocalizedException(
                 __('Please select a valid credit card type')

@@ -76,7 +76,11 @@ class ProcessOrder implements ObserverInterface
         }
 
         $method = $payment->getMethodInstance();
-        if (!(get_class($method) == 'Paybox\Epayment\Model\Payment\Cb')) {
+        $supportedMethods = [
+            'Paybox\Epayment\Model\Payment\Cb',
+            'Paybox\Epayment\Model\Payment\Wallet',
+        ];
+        if (!in_array(get_class($method), $supportedMethods)) {
             return $this;
         }
 

@@ -21,15 +21,12 @@
 
 namespace Paybox\Epayment\Console\Command;
 
-use Magento\Framework\App\ObjectManager\ConfigLoader;
 use Magento\Framework\App\ObjectManagerFactory;
-use Magento\Framework\App\State;
 use Magento\Store\Model\StoreManager;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputOption;
 
 class OrderSaveCommand extends Command
 {
@@ -46,7 +43,7 @@ class OrderSaveCommand extends Command
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this->setName('paybox:saveorder')
             ->setDescription('Test : Call save method for Order')
@@ -54,7 +51,7 @@ class OrderSaveCommand extends Command
         parent::configure();
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->addArguments($input);
         $output->writeln('<info>Starting Paybox SaveOrder Test</info>');
@@ -69,6 +66,8 @@ class OrderSaveCommand extends Command
         }
 
         $output->writeln('<info>End Paybox SaveOrder Test</info>');
+
+        return 0;
     }
 
     public function addArguments($input)

@@ -39,6 +39,10 @@ define(
                 component: 'Paybox_Epayment/js/view/payment/method-renderer/pbxep_simple-method'
             },
             {
+                type: 'pbxep_wallet',
+                component: 'Paybox_Epayment/js/view/payment/method-renderer/pbxep_multi-method'
+            },
+            {
                 type: 'pbxep_paypal',
                 component: 'Paybox_Epayment/js/view/payment/method-renderer/pbxep_simple-method'
             },

@@ -131,6 +131,7 @@
 
             <include path="Paybox_Epayment::system/pbxep_cb.xml"/>
             <include path="Paybox_Epayment::system/pbxep_threetime.xml"/>
+            <include path="Paybox_Epayment::system/pbxep_wallet.xml"/>
             <include path="Paybox_Epayment::system/pbxep_private.xml"/>
             <include path="Paybox_Epayment::system/pbxep_paypal.xml"/>
             <include path="Paybox_Epayment::system/pbxep_prepaid.xml"/>

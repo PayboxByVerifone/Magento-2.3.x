@@ -1,4 +1,8 @@
 # Change Log
+## [2.0.12] 2026-07-15
+- Improve PHP 8.5 compatibility
+- Add Apple Pay & Google Pay payment method
+
 ## [2.0.11] 2026-02-10
 - Improve backward compatibility regarding signature checks
 

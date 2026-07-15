@@ -25,6 +25,8 @@ use Magento\Framework\View\Element\Template;
 
 class Presentation extends Template
 {
+    const MODULE_NAME = 'Paybox_Epayment';
+
     protected function _construct()
     {
         parent::_construct();
@@ -43,5 +45,22 @@ class Presentation extends Template
             $lang = 'en';
         }
         return 'pbxep/presentation/'.$lang.'.phtml';
+    }
+
+    /**
+     * Get module setup version.
+     *
+     * @return string
+     */
+    public function getModuleVersion()
+    {
+        $manager = \Magento\Framework\App\ObjectManager::getInstance();
+        $moduleList = $manager->get('Magento\Framework\Module\ModuleListInterface');
+        $module = $moduleList->getOne(self::MODULE_NAME);
+        if (isset($module['setup_version'])) {
+            return $module['setup_version'];
+        }
+
+        return 'N/A';
     }
 }

@@ -47,6 +47,9 @@
         <method name="pbxep_threetime">
             <allow_multiple_address>0</allow_multiple_address>
         </method>
+        <method name="pbxep_wallet">
+            <allow_multiple_address>0</allow_multiple_address>
+        </method>
         <method name="pbxep_prepaid">
             <allow_multiple_address>0</allow_multiple_address>
         </method>

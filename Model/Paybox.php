@@ -309,11 +309,17 @@ class Paybox
             'HASH' => strtoupper($config->getHmacAlgo()),
         ];
 
-        // Specific Paypal
+        // Specific ACQUEREUR parameter
         $details = $transaction->getAdditionalInformation(Transaction::RAW_DETAILS);
         switch ($details['cardType']) {
             case 'PAYPAL':
                 $fields['ACQUEREUR'] = 'PAYPAL';
+                break;
+            case 'APPLEPAY':
+                $fields['ACQUEREUR'] = 'APPLEPAY';
+                break;
+            case 'GOOGLEPAY':
+                $fields['ACQUEREUR'] = 'GOOGLEPAY';
                 break;
         }
 

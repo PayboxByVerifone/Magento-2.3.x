@@ -26,6 +26,7 @@
             <argument name="configProviders" xsi:type="array">
                 <item name="pbxep_cb_config_provider" xsi:type="object">Paybox\Epayment\Model\Ui\PbxepcbConfigProvider</item>
                 <item name="pbxep_threetime_config_provider" xsi:type="object">Paybox\Epayment\Model\Ui\PbxepthreetimeConfigProvider</item>
+                <item name="pbxep_wallet_config_provider" xsi:type="object">Paybox\Epayment\Model\Ui\PbxepwalletConfigProvider</item>
                 <item name="pbxep_prepaid_config_provider" xsi:type="object">Paybox\Epayment\Model\Ui\PbxepprepaidConfigProvider</item>
                 <item name="pbxep_paybuttons_config_provider" xsi:type="object">Paybox\Epayment\Model\Ui\PbxeppaybuttonsConfigProvider</item>
                 <item name="pbxep_private_config_provider" xsi:type="object">Paybox\Epayment\Model\Ui\PbxepprivateConfigProvider</item>
