@@ -64,6 +64,6 @@ class Failed extends \Paybox\Epayment\Controller\Payment
         }
 
         // Redirect to cart
-        $this->_redirect('checkout/cart');
+        return $this->_redirect('checkout/cart');
     }
 }

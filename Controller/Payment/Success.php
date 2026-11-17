@@ -54,11 +54,11 @@ class Success extends \Paybox\Epayment\Controller\Payment
 
             // Redirect to success page
             $this->_redirectResponse($order, true /* is success ? */, true /* notification url warn in TEST mode */);
-            return;
+            return $this->getResponse();
         } catch (\Exception $e) {
             $this->logDebug(sprintf('successAction: %s', $e->getMessage()));
         }
 
-        $this->_redirect('checkout/cart');
+        return $this->_redirect('checkout/cart');
     }
 }

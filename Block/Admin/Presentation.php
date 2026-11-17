@@ -30,7 +30,7 @@ class Presentation extends Template
     protected function _construct()
     {
         parent::_construct();
-        $this->setTemplate($this->getHtmlTemplate());
+        $this->_template = $this->getHtmlTemplate();
     }
 
     public function getHtmlTemplate()

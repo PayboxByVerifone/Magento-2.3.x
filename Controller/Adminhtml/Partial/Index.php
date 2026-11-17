@@ -52,6 +52,6 @@ class Index extends \Magento\Backend\App\Action
                 ->setCommentText(__('Unable to create an invoice.'));
         }
 
-        $this->_redirect('sales/order/view', ['order_id' => $orderId]);
+        return $this->_redirect('sales/order/view', ['order_id' => $orderId]);
     }
 }
