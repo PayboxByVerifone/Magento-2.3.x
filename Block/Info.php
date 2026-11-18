@@ -27,7 +27,20 @@ use Paybox\Epayment\Gateway\Response\FraudHandler;
 
 class Info extends ConfigurableInfo
 {
+    /** @var \Magento\Framework\Serialize\Serializer\Serialize */
+    private $serializer;
+
     protected $_object_manager;
+
+    public function __construct(
+        \Magento\Framework\View\Element\Template\Context $context,
+        \Magento\Payment\Gateway\ConfigInterface $config,
+        \Magento\Framework\Serialize\Serializer\Serialize $serializer,
+        array $data = []
+    ) {
+        $this->serializer = $serializer;
+        parent::__construct($context, $config, $data);
+    }
 
     /**
      * Returns label
@@ -59,7 +72,7 @@ class Info extends ConfigurableInfo
     protected function _construct()
     {
         parent::_construct();
-        $this->setTemplate('pbxep/info/default.phtml');
+        $this->_template = 'pbxep/info/default.phtml';
         $this->_object_manager = \Magento\Framework\App\ObjectManager::getInstance();
     }
 
@@ -88,7 +101,7 @@ class Info extends ConfigurableInfo
             return [];
         }
 
-        return unserialize($this->getInfo()->getPbxepAuthorization(), ['allowed_classes' => false]);
+        return $this->unserializePaymentData($this->getInfo()->getPbxepAuthorization());
     }
 
     public function getObjectManager()
@@ -203,19 +216,19 @@ class Info extends ConfigurableInfo
         ];
         $data = $info->getPbxepFirstPayment();
         if (!empty($data)) {
-            $data = unserialize($data, ['allowed_classes' => false]);
+            $data = $this->unserializePaymentData($data);
             $date = (isset($data['date']) ? preg_replace('/^([0-9]{2})([0-9]{2})([0-9]{4})$/', '$1/$2/$3', $data['date']) : 'N/A');
             $result['first'] = sprintf('%s (%s)', $data['amount'] / 100.0, $date);
         }
         $data = $info->getPbxepSecondPayment();
         if (!empty($data)) {
-            $data = unserialize($data, ['allowed_classes' => false]);
+            $data = $this->unserializePaymentData($data);
             $date = (isset($data['date']) ? preg_replace('/^([0-9]{2})([0-9]{2})([0-9]{4})$/', '$1/$2/$3', $data['date']) : 'N/A');
             $result['second'] = sprintf('%s (%s)', $data['amount'] / 100.0, $date);
         }
         $data = $info->getPbxepThirdPayment();
         if (!empty($data)) {
-            $data = unserialize($data, ['allowed_classes' => false]);
+            $data = $this->unserializePaymentData($data);
             $date = (isset($data['date']) ? preg_replace('/^([0-9]{2})([0-9]{2})([0-9]{4})$/', '$1/$2/$3', $data['date']) : 'N/A');
             $result['third'] = sprintf('%s (%s)', $data['amount'] / 100.0, $date);
         }
@@ -256,5 +269,20 @@ class Info extends ConfigurableInfo
             }
         }
         return null;
+    }
+
+    /**
+     * Read stored payment data without instantiating objects.
+     *
+     * @param string $data
+     * @return mixed
+     */
+    private function unserializePaymentData($data)
+    {
+        try {
+            return $this->serializer->unserialize($data);
+        } catch (\InvalidArgumentException $exception) {
+            return false;
+        }
     }
 }

@@ -29,7 +29,7 @@ class Payment extends Template
     {
         parent::_construct();
 
-        $this->setTemplate('pbxep/checkout-payment.phtml');
+        $this->_template = 'pbxep/checkout-payment.phtml';
     }
 
     protected function _prepareLayout()
@@ -83,8 +83,8 @@ class Payment extends Template
         $cards = $this->getCreditCards();
         $html = [];
         foreach ($cards as $card) {
-            $url = $this->htmlEscape($this->getSkinUrl($card['image']));
-            $alt = $this->htmlEscape($card['label']);
+            $url = $this->escapeHtmlAttr($this->getSkinUrl($card['image']));
+            $alt = $this->escapeHtmlAttr($card['label']);
             $html[] = '<img class="pbxep-payment-logo" src="'.$url.'" alt="'.$alt.'"/>';
         }
         $html = '<span class="pbxep-payment-label">'.implode('&nbsp;', $html).'</span>';

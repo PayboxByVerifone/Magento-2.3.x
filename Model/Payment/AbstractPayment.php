@@ -90,6 +90,12 @@ abstract class AbstractPayment extends AbstractMethod
     protected $_objectManager = null;
     protected $_logger = null;
 
+    /** @var \Magento\Sales\Model\ResourceModel\Order */
+    protected $orderResource;
+
+    /** @var \Magento\Framework\Serialize\Serializer\Serialize */
+    protected $serializer;
+
     public function __construct(
         \Magento\Framework\Model\Context $context,
         \Magento\Framework\Registry $registry,
@@ -98,6 +104,8 @@ abstract class AbstractPayment extends AbstractMethod
         \Magento\Payment\Helper\Data $paymentData,
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         \Magento\Payment\Model\Method\Logger $logger,
+        \Magento\Sales\Model\ResourceModel\Order $orderResource,
+        \Magento\Framework\Serialize\Serializer\Serialize $serializer,
         ?\Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         ?\Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
@@ -115,6 +123,8 @@ abstract class AbstractPayment extends AbstractMethod
             $data
         );
 
+        $this->orderResource = $orderResource;
+        $this->serializer = $serializer;
         $this->_scopeConfig = $scopeConfig;
         $this->_objectManager = \Magento\Framework\App\ObjectManager::getInstance();
         // $this->_logger = $logger;
@@ -151,14 +161,6 @@ abstract class AbstractPayment extends AbstractMethod
         $payment = $order->getPayment();
 
         $txnId = $this->_createTransactionId($data);
-        if (empty($txnId)) {
-            if (!empty($parent)) {
-                $txnId = $parent->getAdditionalInformation(self::TRANSACTION_NUMBER);
-            } else {
-                // Possible if payment failed.
-                // throw new \LogicException('Invalid transaction id ' . $txnId);
-            }
-        }
 
         if (!empty($txnId)) {
             $payment->setTransactionId($txnId);
@@ -170,9 +172,6 @@ abstract class AbstractPayment extends AbstractMethod
 
         foreach ($infos as $key => $value) {
             $transaction->setAdditionalInformation($key, $value);
-        }
-        if (!empty($parent)) {
-            $transaction->setParentTxnId($parent->getTxnId());
         }
 
         $transaction->setIsClosed($closed === true);
@@ -289,7 +288,7 @@ abstract class AbstractPayment extends AbstractMethod
         debug_print_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
         $order = $payment->getOrder();
         $order->addStatusHistoryComment('Call to cancel()');
-        $order->save();
+        $this->orderResource->save($order);
         return;
     }
 
@@ -393,7 +392,7 @@ abstract class AbstractPayment extends AbstractMethod
         $captureTxn->save();
         if ($close) {
             $captureTxn->close();
-            $payment->setPbxepCapture(serialize($data));
+            $payment->setPbxepCapture($this->serializer->serialize($data));
         }
 
         // Avoid automatic transaction creation
@@ -411,7 +410,7 @@ abstract class AbstractPayment extends AbstractMethod
         $state = Order::STATE_PROCESSING;
         $order->setState($state, $status, __($message));
         $order->setIsInProgress(true);
-        $order->save();
+        $this->orderResource->save($order);
 
         return $this;
     }
@@ -893,7 +892,7 @@ abstract class AbstractPayment extends AbstractMethod
 
         $this->logDebug(sprintf('Order %s: %s', $order->getIncrementId(), $message));
 
-        $order->save();
+        $this->orderResource->save($order);
     }
 
     /**
@@ -1002,7 +1001,7 @@ abstract class AbstractPayment extends AbstractMethod
             $this->_processingTransaction->setAdditionalInformation(Transaction::RAW_DETAILS, $data);
         }
 
-        $order->save();
+        $this->orderResource->save($order);
     }
 
     /**
@@ -1027,7 +1026,7 @@ abstract class AbstractPayment extends AbstractMethod
         $type = Transaction::TYPE_VOID;
         $this->_addPayboxTransaction($order, $type, $data, true);
 
-        $order->save();
+        $this->orderResource->save($order);
     }
 
     /**
@@ -1084,9 +1083,9 @@ abstract class AbstractPayment extends AbstractMethod
         // Associate data to payment
         $payment->setPbxepAction($this->getPayboxAction());
         $payment->setPbxepDelay((int) $this->getConfigData('delay'));
-        $payment->setPbxepAuthorization(serialize($data));
+        $payment->setPbxepAuthorization($this->serializer->serialize($data));
         if ($withCapture) {
-            $payment->setPbxepCapture(serialize($data));
+            $payment->setPbxepCapture($this->serializer->serialize($data));
         }
 
         // Set status
@@ -1107,7 +1106,7 @@ abstract class AbstractPayment extends AbstractMethod
         $order->setIsCustomerNotified(true);
 
         $payment->save();
-        $order->save();
+        $this->orderResource->save($order);
     }
 
     /**

@@ -23,5 +23,5 @@ namespace Paybox\Epayment\Model\Admin\Order\Status;
 
 class Pending extends \Paybox\Epayment\Model\Admin\Order\Status
 {
-    protected $_stateStatuses = \Magento\Sales\Model\Order::STATE_PENDING;
+    protected $_stateStatuses = \Magento\Sales\Model\Order::STATE_PENDING_PAYMENT;
 }

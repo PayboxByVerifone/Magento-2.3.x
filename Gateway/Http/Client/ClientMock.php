@@ -76,12 +76,12 @@ class ClientMock implements ClientInterface
         return $response;
     }
 
-    public function getCards()
+    public function getCards(\Paybox\Epayment\Model\Payment\AbstractPayment $method)
     {
         $result = [];
-        $this->getMethod()->getCards();
+        $cards = $method->getCards();
         if (!empty($cards)) {
-            $selected = explode(',', $this->getMethod()->getConfigData('cctypes'));
+            $selected = explode(',', $method->getConfigData('cctypes'));
             foreach ($cards as $code => $card) {
                 if (in_array($code, $selected)) {
                     $result[$code] = $card;
@@ -112,7 +112,7 @@ class ClientMock implements ClientInterface
      */
     protected function generateTxnId()
     {
-        return md5(mt_rand(0, 1000));
+        return substr(hash('sha256', (string) random_int(0, 1000)), 0, 32);
     }
 
     /**
@@ -129,7 +129,7 @@ class ClientMock implements ClientInterface
             return (int)$headers['force_result'];
         }
 
-        return $this->results[mt_rand(0, 1)];
+        return $this->results[random_int(0, 1)];
     }
 
     /**

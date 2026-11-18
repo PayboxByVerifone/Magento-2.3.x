@@ -37,8 +37,7 @@ class Threetime extends AbstractPayment
     public function toOptionArray()
     {
         $result = [];
-        $configPath = $this->getConfigPath();
-        $cards = $this->_getConfigValue($configPath);
+        $cards = $this->getCards();
         if (!empty($cards)) {
             foreach ($cards as $code => $card) {
                 $result[] = [
@@ -71,7 +70,7 @@ class Threetime extends AbstractPayment
     {
         $this->logDebug(sprintf('Order %s: Threetime IPN', $order->getIncrementId()));
 
-        $this->logDebug(sprintf('onIPNSuccess :', $order->getIncrementId()));
+        $this->logDebug('onIPNSuccess :');
 
         $payment = $order->getPayment();
 
@@ -113,8 +112,8 @@ class Threetime extends AbstractPayment
             }
 
             // Additional informations
-            $payment->setPbxepFirstPayment(serialize($data));
-            $payment->setPbxepAuthorization(serialize($data));
+            $payment->setPbxepFirstPayment($this->serializer->serialize($data));
+            $payment->setPbxepAuthorization($this->serializer->serialize($data));
 
             $this->logDebug(sprintf('Order %s: %s', $order->getIncrementId(), $message));
 
@@ -131,7 +130,7 @@ class Threetime extends AbstractPayment
             $order->addStatusHistoryComment($message);
 
             // Additional informations
-            $payment->setPbxepSecondPayment(serialize($data));
+            $payment->setPbxepSecondPayment($this->serializer->serialize($data));
             $this->logDebug(sprintf('Order %s: %s', $order->getIncrementId(), $message));
         } elseif (is_null($payment->getPbxepThirdPayment())) {
             // Message
@@ -139,7 +138,7 @@ class Threetime extends AbstractPayment
             $order->addStatusHistoryComment($message);
 
             // Additional informations
-            $payment->setPbxepThirdPayment(serialize($data));
+            $payment->setPbxepThirdPayment($this->serializer->serialize($data));
             $this->logDebug(sprintf('Order %s: %s', $order->getIncrementId(), $message));
         } else {
             $this->logDebug(sprintf('Order %s: Invalid three-time payment status', $order->getIncrementId()));
@@ -151,6 +150,6 @@ class Threetime extends AbstractPayment
         $payment->setPbxepAction('three-time');
 
         $payment->save();
-        $order->save();
+        $this->orderResource->save($order);
     }
 }
