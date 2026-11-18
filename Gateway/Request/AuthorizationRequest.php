@@ -21,7 +21,6 @@
 
 namespace Paybox\Epayment\Gateway\Request;
 
-use Magento\Payment\Gateway\ConfigInterface;
 use Magento\Payment\Gateway\Data\PaymentDataObjectInterface;
 use Magento\Payment\Gateway\Request\BuilderInterface;
 use Magento\Sales\Model\Order\Payment;
@@ -32,7 +31,7 @@ class AuthorizationRequest implements BuilderInterface
     /** @var Paybox */
     private $paybox;
 
-    public function __construct(ConfigInterface $config, Paybox $paybox)
+    public function __construct(Paybox $paybox)
     {
         $this->paybox = $paybox;
     }

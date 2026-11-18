@@ -91,12 +91,6 @@
             </argument>
         </arguments>
     </virtualType>
-    <type name="Paybox\Epayment\Gateway\Request\AuthorizationRequest">
-        <arguments>
-            <argument name="config" xsi:type="object">PbxepcbConfig</argument>
-        </arguments>
-    </type>
-
     <!-- Capture command -->
     <virtualType name="PbxepcbCaptureCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
         <arguments>
@@ -226,12 +220,6 @@
             </argument>
         </arguments>
     </virtualType>
-    <type name="Paybox\Epayment\Gateway\Request\AuthorizationRequest">
-        <arguments>
-            <argument name="config" xsi:type="object">PbxepthreetimeConfig</argument>
-        </arguments>
-    </type>
-
     <!-- Capture command -->
     <virtualType name="PbxepthreetimeCaptureCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
         <arguments>
@@ -361,12 +349,6 @@
             </argument>
         </arguments>
     </virtualType>
-    <type name="Paybox\Epayment\Gateway\Request\AuthorizationRequest">
-        <arguments>
-            <argument name="config" xsi:type="object">PbxepwalletConfig</argument>
-        </arguments>
-    </type>
-
     <!-- Capture command -->
     <virtualType name="PbxepwalletCaptureCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
         <arguments>
@@ -495,12 +477,6 @@
             </argument>
         </arguments>
     </virtualType>
-    <type name="Paybox\Epayment\Gateway\Request\AuthorizationRequest">
-        <arguments>
-            <argument name="config" xsi:type="object">PbxepprepaidConfig</argument>
-        </arguments>
-    </type>
-
     <!-- Capture command -->
     <virtualType name="PbxepprepaidCaptureCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
         <arguments>
@@ -630,12 +606,6 @@
             </argument>
         </arguments>
     </virtualType>
-    <type name="Paybox\Epayment\Gateway\Request\AuthorizationRequest">
-        <arguments>
-            <argument name="config" xsi:type="object">PbxeppaybuttonsConfig</argument>
-        </arguments>
-    </type>
-
     <!-- Capture command -->
     <virtualType name="PbxeppaybuttonsCaptureCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
         <arguments>
@@ -765,12 +735,6 @@
             </argument>
         </arguments>
     </virtualType>
-    <type name="Paybox\Epayment\Gateway\Request\AuthorizationRequest">
-        <arguments>
-            <argument name="config" xsi:type="object">PbxepprivateConfig</argument>
-        </arguments>
-    </type>
-
     <!-- Capture command -->
     <virtualType name="PbxepprivateCaptureCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
         <arguments>
@@ -900,12 +864,6 @@
             </argument>
         </arguments>
     </virtualType>
-    <type name="Paybox\Epayment\Gateway\Request\AuthorizationRequest">
-        <arguments>
-            <argument name="config" xsi:type="object">PbxepfinancialConfig</argument>
-        </arguments>
-    </type>
-
     <!-- Capture command -->
     <virtualType name="PbxepfinancialCaptureCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
         <arguments>
